@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafariAssist | Frontline Translation & Phrasebook</title>
+  <title>SafariAssist | Frontline Concierge & Translator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@500;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,111 +16,164 @@
       --accent-green: #10b981;
       --accent-green-hover: #059669;
       --accent-blue: #3b82f6;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
       --text-primary: #f9fafb;
       --text-secondary: #9ca3af;
       --danger: #ef4444;
     }
 
     * { box-sizing: border-box; font-family: 'Inter', 'Noto Sans Thai', 'Noto Sans SC', sans-serif; }
-    body { background-color: var(--bg-main); color: var(--text-primary); margin: 0; padding: 20px 16px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-    .container { width: 100%; max-width: 500px; padding-bottom: 40px; }
+    body { background-color: var(--bg-main); color: var(--text-primary); margin: 0; padding: 12px 16px 40px 16px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    .container { width: 100%; max-width: 540px; }
+
+    /* Top Balance & Token Bar */
+    .token-bar { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 14px; }
+    .token-bar strong { color: var(--accent-green); }
+    .btn-sync { background: var(--bg-input); border: 1px solid var(--border-color); color: #d1d5db; font-size: 0.72rem; cursor: pointer; padding: 2px 8px; border-radius: 4px; }
+    .btn-sync:hover { background: #374151; color: #fff; }
 
     /* Header */
-    header { text-align: center; margin-bottom: 20px; }
-    header h1 { margin: 0; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); display: flex; align-items: center; justify-content: center; gap: 8px; }
-    header p { margin: 4px 0 0 0; font-size: 0.85rem; color: var(--text-secondary); }
+    header { text-align: center; margin-bottom: 16px; }
+    header h1 { margin: 0; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+    header p { margin: 4px 0 0 0; font-size: 0.82rem; color: var(--text-secondary); }
 
-    /* Navigation Tabs */
-    .nav-tabs { display: flex; gap: 6px; margin-bottom: 20px; background: var(--bg-card); padding: 6px; border-radius: 12px; border: 1px solid var(--border-color); }
-    .nav-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; background: transparent; color: var(--text-secondary); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
+    /* 4 Navigation Tabs */
+    .nav-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 16px; background: var(--bg-card); padding: 5px; border-radius: 12px; border: 1px solid var(--border-color); }
+    .nav-btn { padding: 9px 4px; border: none; border-radius: 8px; background: transparent; color: var(--text-secondary); font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
     .nav-btn.active { background: var(--accent-green); color: #fff; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25); }
+    .nav-btn.active.concierge-tab { background: var(--accent-purple); box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25); }
 
-    /* API Configuration Box */
-    .api-box { background: var(--bg-card); padding: 12px 14px; border-radius: 10px; margin-bottom: 16px; border: 1px solid var(--border-color); }
-    .api-box summary { cursor: pointer; color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; user-select: none; }
-    .api-box input { width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-size: 0.9rem; }
-    .api-box input:focus { outline: none; border-color: var(--accent-green); }
+    /* API Box */
+    .api-box { background: var(--bg-card); padding: 10px 14px; border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--border-color); }
+    .api-box summary { cursor: pointer; color: var(--text-secondary); font-size: 0.82rem; font-weight: 500; user-select: none; }
+    .api-box input { width: 100%; padding: 9px; margin-top: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-size: 0.88rem; }
 
-    /* Translation Form */
-    textarea { width: 100%; height: 95px; padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 1rem; resize: none; margin-bottom: 12px; line-height: 1.5; transition: border-color 0.2s; }
-    textarea:focus { outline: none; border-color: var(--accent-green); }
-    .btn-main { width: 100%; padding: 14px; border: none; border-radius: 10px; background: var(--accent-green); color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+    /* Form Elements */
+    textarea, .text-input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 0.95rem; margin-bottom: 10px; }
+    textarea { height: 85px; resize: none; line-height: 1.5; }
+    textarea:focus, .text-input:focus { outline: none; border-color: var(--accent-green); }
+    .btn-main { width: 100%; padding: 13px; border: none; border-radius: 10px; background: var(--accent-green); color: #fff; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
     .btn-main:hover { background: var(--accent-green-hover); }
-    .btn-main:active { transform: scale(0.99); }
     .btn-main:disabled { background: #374151; color: #9ca3af; cursor: not-allowed; }
+    .btn-purple { background: var(--accent-purple); }
+    .btn-purple:hover { background: #7c3aed; }
 
-    /* Result Cards */
-    .result-box { margin-top: 22px; display: none; flex-direction: column; gap: 14px; }
-    .card { background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); border-left: 4px solid var(--accent-green); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+    /* Cards & Results */
+    .result-box { margin-top: 18px; display: none; flex-direction: column; gap: 14px; }
+    .card { background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); border-left: 4px solid var(--accent-green); }
     .card.en { border-left-color: var(--accent-blue); }
+    .card.vocab { border-left-color: var(--accent-amber); }
+    .card.concierge { border-left-color: var(--accent-purple); }
     .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .label { font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
     .action-btns { display: flex; gap: 6px; }
-    .btn-small { background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color); padding: 6px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .btn-small { background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color); padding: 5px 9px; border-radius: 6px; font-size: 0.78rem; font-weight: 500; cursor: pointer; }
     .btn-small:hover { background: #374151; }
-    .zh-text { font-size: 1.45rem; font-weight: 700; color: #fff; margin-bottom: 4px; line-height: 1.4; }
-    .pinyin-text { font-size: 0.95rem; color: var(--accent-green); font-weight: 500; }
-    .en-text { font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.4; }
+    
+    .th-meaning-box { font-size: 0.95rem; color: #93c5fd; font-weight: 600; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); }
+    .zh-text { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.4; }
+    .pinyin-orig { font-size: 0.92rem; color: var(--accent-green); font-weight: 500; }
+    .en-text { font-size: 1.1rem; font-weight: 600; color: #fff; line-height: 1.4; }
 
-    /* Save to Phrasebook Bar */
+    /* Tone Sandhi Box */
+    .tone-box { margin-top: 10px; padding: 10px 12px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; font-size: 0.85rem; }
+    .tone-title { color: var(--accent-amber); font-weight: 700; margin-bottom: 4px; }
+    .tone-spoken { color: #fde68a; font-weight: 600; margin-bottom: 2px; }
+    .tone-rule { color: #d1d5db; font-size: 0.8rem; line-height: 1.4; }
+
+    /* Concierge Specific UI */
+    .time-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+    .time-input { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.95rem; flex: 1; }
+    .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .chip { background: var(--bg-input); border: 1px solid var(--border-color); color: #e5e7eb; padding: 6px 10px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; transition: 0.15s; }
+    .chip:hover { border-color: var(--accent-purple); color: #fff; }
+    
+    .show-toggles { background: var(--bg-card); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 12px; }
+    .toggle-title { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .toggle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .toggle-item { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-primary); cursor: pointer; background: var(--bg-input); padding: 6px 8px; border-radius: 6px; }
+    .toggle-item input { accent-color: var(--accent-purple); width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
+    .toggle-item.cancelled { opacity: 0.5; text-decoration: line-through; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    .staff-advice { font-size: 0.95rem; line-height: 1.6; color: #f3f4f6; white-space: pre-line; }
+
+    /* Save Bar */
     .save-bar { display: flex; gap: 8px; background: var(--bg-card); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color); align-items: center; }
     .save-bar select { flex: 1; padding: 9px; border-radius: 8px; background: var(--bg-input); color: #fff; border: 1px solid var(--border-color); font-size: 0.85rem; }
     .btn-save { background: var(--accent-blue); color: #fff; border: none; padding: 9px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
 
-    /* Phrasebook Section */
-    .search-input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-card); color: #fff; font-size: 0.95rem; margin-bottom: 12px; }
-    .search-input:focus { outline: none; border-color: var(--accent-blue); }
+    /* Lists & Vocab */
+    .ext-vocab-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+    .ext-vocab-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ev-info { display: flex; flex-direction: column; }
+    .ev-zh { font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .ev-sub { font-size: 0.8rem; color: var(--text-secondary); }
+
     .cat-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; }
-    .cat-btn { padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: all 0.2s; }
+    .cat-btn { padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; white-space: nowrap; cursor: pointer; }
     .cat-btn.active { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
 
-    .phrase-list { display: flex; flex-direction: column; gap: 12px; }
-    .phrase-card { background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); }
-    .phrase-card.pinned { border-color: #eab308; background: linear-gradient(145deg, #111827, #1c1917); }
+    .item-list { display: flex; flex-direction: column; gap: 12px; }
+    .list-card { background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); }
+    .list-card.pinned { border-color: #eab308; background: linear-gradient(145deg, #111827, #1c1917); }
     .p-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
     .p-th { font-size: 0.95rem; color: var(--text-primary); font-weight: 600; }
     .p-zh { font-size: 1.25rem; color: var(--accent-green); font-weight: 700; margin-bottom: 2px; }
-    .p-pinyin { font-size: 0.85rem; color: #6ee7b7; margin-bottom: 8px; }
-    .p-en { font-size: 0.95rem; color: #93c5fd; margin-bottom: 12px; }
-    .p-actions { display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 10px; }
+    .p-pinyin { font-size: 0.85rem; color: #6ee7b7; margin-bottom: 6px; }
+    .p-en { font-size: 0.95rem; color: #93c5fd; margin-bottom: 10px; }
+    .p-actions { display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 8px; }
+
+    .add-vocab-box { background: var(--bg-card); padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 14px; }
+    .add-vocab-box summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--accent-amber); }
+    .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
 
     /* Fullscreen Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #030712; z-index: 999; flex-direction: column; justify-content: center; align-items: center; padding: 28px; text-align: center; }
-    .modal-zh { font-size: 2.5rem; font-weight: 700; color: var(--accent-green); margin-bottom: 12px; line-height: 1.35; }
-    .modal-pinyin { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 32px; }
-    .modal-en { font-size: 1.65rem; font-weight: 600; color: #fff; line-height: 1.4; }
+    .modal-zh { font-size: 2.3rem; font-weight: 700; color: var(--accent-green); margin-bottom: 12px; line-height: 1.35; }
+    .modal-pinyin { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 28px; }
+    .modal-en { font-size: 1.5rem; font-weight: 600; color: #fff; line-height: 1.4; }
     .modal-close { position: absolute; top: 24px; right: 24px; background: var(--bg-input); color: #fff; border: 1px solid var(--border-color); padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
 
     /* Backup & Footer */
-    .backup-box { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; }
-    .btn-backup { flex: 1; padding: 10px; background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; font-weight: 500; cursor: pointer; }
+    .backup-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-backup { flex: 1; padding: 10px; background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.82rem; font-weight: 500; cursor: pointer; min-width: 120px; }
     .btn-backup:hover { color: #fff; border-color: #4b5563; }
-    
-    footer { margin-top: 32px; text-align: center; font-size: 0.75rem; color: #6b7280; }
+    footer { margin-top: 28px; text-align: center; font-size: 0.75rem; color: #6b7280; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <header>
-    <h1>SafariAssist</h1>
-    <p>Frontline Guest Communication & Phrasebook</p>
-  </header>
-
-  <div class="nav-tabs">
-    <button class="nav-btn active" id="tabTranslate" onclick="switchTab('translate')">Live Translator</button>
-    <button class="nav-btn" id="tabBook" onclick="switchTab('book')">Phrasebook</button>
+  <!-- Top Real Balance & Token Bar -->
+  <div class="token-bar">
+    <span>DeepSeek Balance: <strong id="realBalanceText">Checking...</strong> <span id="localTokenText" style="font-size:0.7rem;"></span></span>
+    <button class="btn-sync" onclick="fetchRealBalance()" title="อัปเดตยอดเงินจริงจาก DeepSeek">↻ Sync</button>
   </div>
 
-  <!-- ================= VIEW 1: LIVE TRANSLATOR ================= -->
-  <div id="viewTranslate">
-    <details class="api-box" id="apiDetails">
-      <summary>⚙️ API Configuration (DeepSeek Key)</summary>
-      <input type="password" id="apiKeyInput" placeholder="Enter your sk-... API Key" onchange="saveKey()">
-    </details>
+  <header>
+    <h1>SafariAssist</h1>
+    <p>Frontline Concierge, Translation & Language Operations</p>
+  </header>
 
-    <textarea id="thaiInput" placeholder="พิมพ์ข้อความภาษาไทยที่ต้องการสื่อสารกับนักท่องเที่ยว..."></textarea>
-    <button class="btn-main" id="translateBtn" onclick="translateText()">Translate Now</button>
+  <!-- 4 Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="nav-btn active" id="tabTranslate" onclick="switchTab('translate')">Translator</button>
+    <button class="nav-btn concierge-tab" id="tabConcierge" onclick="switchTab('concierge')">Concierge</button>
+    <button class="nav-btn" id="tabBook" onclick="switchTab('book')">Phrasebook</button>
+    <button class="nav-btn" id="tabVocab" onclick="switchTab('vocab')">Vocabulary</button>
+  </div>
+
+  <!-- Global API Configuration -->
+  <details class="api-box" id="apiDetails">
+    <summary>⚙️ API Configuration (DeepSeek Key)</summary>
+    <input type="password" id="apiKeyInput" placeholder="Enter your sk-... API Key" onchange="saveKey()">
+  </details>
+
+  <!-- ================= VIEW 1: TRANSLATOR & TONE ================= -->
+  <div id="viewTranslate">
+    <textarea id="mainInput" placeholder="พิมพ์ภาษาไทยเพื่อแปล หรือวางประโยคภาษาจีนเพื่อเช็กพินอินและการผันเสียง..."></textarea>
+    <button class="btn-main" id="translateBtn" onclick="processInput()">Translate / Analyze Tone</button>
 
     <div class="result-box" id="resultBox">
       <div class="save-bar">
@@ -134,15 +187,22 @@
 
       <div class="card">
         <div class="card-header">
-          <span class="label">Chinese (Simplified)</span>
+          <span class="label">Chinese & Tone Analysis</span>
           <div class="action-btns">
-            <button class="btn-small" onclick="openModal(currentResult.zh, currentResult.pinyin, currentResult.en)">Fullscreen</button>
+            <button class="btn-small" onclick="openModal(currentResult.zh, currentResult.pinyin_orig, currentResult.en)">Fullscreen</button>
             <button class="btn-small" onclick="speak(currentResult.zh, 'zh-CN')">Audio</button>
             <button class="btn-small" onclick="copy(currentResult.zh, this)">Copy</button>
           </div>
         </div>
+        <div class="th-meaning-box" id="thMeaningOut" style="display: none;"></div>
         <div class="zh-text" id="zhOut">-</div>
-        <div class="pinyin-text" id="pinyinOut">-</div>
+        <div class="pinyin-orig" id="pinyinOrigOut">-</div>
+        
+        <div class="tone-box" id="toneBox" style="display: none;">
+          <div class="tone-title">💡 กฎการผันเสียง (Tone Sandhi)</div>
+          <div class="tone-spoken" id="pinyinSpokenOut"></div>
+          <div class="tone-rule" id="toneRuleOut"></div>
+        </div>
       </div>
 
       <div class="card en">
@@ -155,12 +215,100 @@
         </div>
         <div class="en-text" id="enOut">-</div>
       </div>
+
+      <div class="card vocab" id="extVocabCard" style="display: none;">
+        <div class="card-header">
+          <span class="label" style="color: var(--accent-amber);">Key Vocabulary (กดเซฟเข้าคลังศัพท์)</span>
+        </div>
+        <div id="extVocabList"></div>
+      </div>
     </div>
   </div>
 
-  <!-- ================= VIEW 2: PHRASEBOOK ================= -->
+  <!-- ================= VIEW 2: CONCIERGE & ROUTE PLANNER ================= -->
+  <div id="viewConcierge" style="display: none;">
+    <!-- Knowledge Base Editor -->
+    <details class="api-box" style="border-color: var(--accent-purple);">
+      <summary style="color: #c4b5fd;">📅 แก้ไขตารางเวลา, พิกัด & ข้อมูลหน้างาน (Knowledge Base)</summary>
+      <textarea id="kbInput" style="height: 200px; margin-top: 10px; font-size: 0.82rem; background: var(--bg-input);"></textarea>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-main btn-purple" style="padding: 8px; font-size: 0.85rem;" onclick="saveKB()">บันทึกข้อมูลหน้างาน</button>
+        <button class="btn-small" onclick="resetDefaultKB()" style="white-space: nowrap;">รีเซ็ตค่าเริ่มต้น</button>
+      </div>
+    </details>
+
+    <!-- Active Shows & Trams Filter -->
+    <div class="show-toggles">
+      <div class="toggle-title">
+        <span>🚦 สถานะบริการวันนี้ (ติ๊กออก = ปิด/งดให้บริการ)</span>
+      </div>
+      <div class="toggle-grid" id="showToggleGrid"></div>
+    </div>
+
+    <!-- Time & Day Selector -->
+    <div class="time-row">
+      <select id="daySelect" class="time-input" style="max-width: 135px;">
+        <option value="วันจันทร์">วันจันทร์</option>
+        <option value="วันอังคาร">วันอังคาร</option>
+        <option value="วันพุธ">วันพุธ</option>
+        <option value="วันพฤหัสบดี">วันพฤหัสบดี</option>
+        <option value="วันศุกร์">วันศุกร์</option>
+        <option value="วันเสาร์">วันเสาร์</option>
+        <option value="วันอาทิตย์">วันอาทิตย์</option>
+      </select>
+      <input type="time" id="timeSelect" class="time-input">
+      <button class="btn-small" onclick="setCurrentTime()" style="padding: 10px;">เวลาปัจจุบัน</button>
+    </div>
+
+    <!-- Quick Scenarios -->
+    <div class="quick-chips">
+      <span class="chip" onclick="setConciergePrompt('ลูกค้าเพิ่งมาถึงตอนนี้ ควรไปไหนก่อนดี เรียงลำดับให้หน่อย')">🚶 เพิ่งมาถึง ไปไหนก่อนดี?</span>
+      <span class="chip" onclick="setConciergePrompt('ลูกค้าเพิ่งลงจากรถราง Savanna Safari ตอนนี้ ไปดูอะไรต่อทันบ้าง')">🦓 เพิ่งลง Savanna</span>
+      <span class="chip" onclick="setConciergePrompt('ลูกค้าเพิ่งลงจากรถราง Predator Prowl ตอนนี้ ไปดูอะไรต่อทันบ้าง')">🐅 เพิ่งลง Predator</span>
+      <span class="chip" onclick="setConciergePrompt('ลูกค้าถามรอบโชว์ตัวน้องเอวา กับ น้องลูน่า วันนี้มีรอบกี่โมง แสดงตรงไหน')">🐯 รอบน้องเอวา & ลูน่า</span>
+    </div>
+
+    <textarea id="conciergeInput" placeholder="พิมพ์สถานการณ์หรือคำถามลูกค้า (เช่น: ลูกค้าเพิ่งลงจาก Savanna ตอน 19.30 ไปดูโชว์เสือทันมั้ย)..."></textarea>
+    <button class="btn-main btn-purple" id="conciergeBtn" onclick="askConcierge()">วิเคราะห์เส้นทาง & คำตอบ</button>
+
+    <!-- Concierge Result -->
+    <div class="result-box" id="conciergeResultBox">
+      <div class="card concierge">
+        <div class="card-header">
+          <span class="label" style="color: #c4b5fd;">📋 คำแนะนำสำหรับมึง (Staff Guide)</span>
+        </div>
+        <div class="staff-advice" id="staffAdviceOut">-</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="label">🇨🇳 คำตอบสำหรับลูกค้าจีน</span>
+          <div class="action-btns">
+            <button class="btn-small" onclick="openModal(cResult.zh, cResult.pinyin, cResult.en)">Fullscreen</button>
+            <button class="btn-small" onclick="speak(cResult.zh, 'zh-CN')">Audio</button>
+            <button class="btn-small" onclick="copy(cResult.zh, this)">Copy</button>
+          </div>
+        </div>
+        <div class="zh-text" id="cZhOut">-</div>
+        <div class="pinyin-orig" id="cPinyinOut">-</div>
+      </div>
+
+      <div class="card en">
+        <div class="card-header">
+          <span class="label">🇬🇧 คำตอบสำหรับลูกค้าต่างชาติ</span>
+          <div class="action-btns">
+            <button class="btn-small" onclick="speak(cResult.en, 'en-US')">Audio</button>
+            <button class="btn-small" onclick="copy(cResult.en, this)">Copy</button>
+          </div>
+        </div>
+        <div class="en-text" id="cEnOut">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= VIEW 3: PHRASEBOOK ================= -->
   <div id="viewBook" style="display: none;">
-    <input type="text" class="search-input" id="searchInput" placeholder="Search phrases (Thai, Chinese, English)..." oninput="renderBook()">
+    <input type="text" class="text-input" id="searchInput" placeholder="Search phrases..." oninput="renderBook()">
     
     <div class="cat-tabs">
       <button class="cat-btn active" onclick="filterCat('all', this)">All Phrases</button>
@@ -169,11 +317,12 @@
       <button class="cat-btn" onclick="filterCat('alert', this)">Advisories</button>
     </div>
 
-    <div class="phrase-list" id="phraseList"></div>
+    <div class="item-list" id="phraseList"></div>
 
     <div class="backup-box">
-      <button class="btn-backup" onclick="exportData()">Export Backup</button>
-      <button class="btn-backup" onclick="toggleRestoreBox()">Restore Backup</button>
+      <button class="btn-backup" onclick="exportCSV('phrases')" style="color: var(--accent-green); border-color: var(--accent-green);">📊 Export CSV (Excel)</button>
+      <button class="btn-backup" onclick="exportAllData()">📤 Backup JSON</button>
+      <button class="btn-backup" onclick="toggleRestoreBox()">📥 Restore JSON</button>
     </div>
 
     <div id="restoreBox" style="display: none; margin-top: 12px; background: var(--bg-card); padding: 14px; border-radius: 10px; border: 1px solid var(--accent-blue);">
@@ -182,12 +331,33 @@
     </div>
   </div>
 
+  <!-- ================= VIEW 4: VOCABULARY ================= -->
+  <div id="viewVocab" style="display: none;">
+    <details class="add-vocab-box">
+      <summary>+ เพิ่มคำศัพท์ใหม่ด้วยตัวเอง (Manual Add)</summary>
+      <div class="vocab-grid">
+        <input type="text" class="text-input" id="vZhInput" placeholder="ภาษาจีน (เช่น 游览车)" style="margin:0;">
+        <input type="text" class="text-input" id="vPinyinInput" placeholder="พินอิน (เช่น yóulǎnchē)" style="margin:0;">
+      </div>
+      <input type="text" class="text-input" id="vThInput" placeholder="ความหมายภาษาไทย (เช่น รถราง)" style="margin-top:8px;">
+      <button class="btn-main" style="padding: 10px; font-size: 0.9rem; background: var(--accent-amber); color: #000;" onclick="addManualVocab()">Save Vocabulary</button>
+    </details>
+
+    <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+      <input type="text" class="text-input" id="searchVocabInput" placeholder="Search vocabulary..." oninput="renderVocab()" style="margin:0;">
+      <button class="btn-small" id="quizToggleBtn" onclick="toggleQuizMode()" style="white-space: nowrap; padding: 0 10px;">👁️ ทายศัพท์</button>
+      <button class="btn-small" onclick="exportCSV('vocab')" style="white-space: nowrap; padding: 0 10px; color: var(--accent-green); border-color: var(--accent-green);">📊 CSV</button>
+    </div>
+
+    <div class="item-list" id="vocabList"></div>
+  </div>
+
   <footer>
-    Powered by DeepSeek API • Built for Frontline Hospitality Operations
+    Powered by DeepSeek API • Frontline Concierge & Language Operations
   </footer>
 </div>
 
-<!-- Fullscreen Display Modal -->
+<!-- Fullscreen Modal -->
 <div class="modal" id="flashModal">
   <button class="modal-close" onclick="closeModal()">Close</button>
   <div class="modal-zh" id="mZh"></div>
@@ -197,40 +367,283 @@
 
 <script>
   let currentResult = null;
+  let cResult = null;
   let currentCat = 'all';
+  let quizMode = false;
 
-  const defaultPhrases = [
-    { id: 1, cat: 'ticket', pinned: true, th: 'กรุณาแสดงคิวอาร์โค้ดก่อนขึ้นรถรางครับ/ค่ะ', zh: '请在上车前出示您的二维码。', pinyin: 'Qǐng zài shàngchē qián chūshì nín de èrwéimǎ.', en: 'Please show your QR code before boarding the tram.' },
-    { id: 2, cat: 'ticket', pinned: false, th: 'รบกวนต่อแถวรอตรงนี้นะครับ/ค่ะ', zh: '请在这里排队等候。', pinyin: 'Qǐng zài zhèlǐ páiduì děnghòu.', en: 'Please queue up here.' },
-    { id: 3, cat: 'show', pinned: false, th: 'การแสดงรอบนี้จบลงแล้วครับ/ค่ะ', zh: '本场表演已经结束了。', pinyin: 'Běn chǎng biǎoyǎn yǐjīng jiéshù le.', en: 'This show has already ended.' },
-    { id: 4, cat: 'alert', pinned: false, th: 'ขออภัยครับ/ค่ะ ฝนตกหนัก รถรางหยุดให้บริการชั่วคราว', zh: '抱歉，因下大雨，游览车暂停服务。', pinyin: 'Bàoqiàn, yīn xià dàyǔ, yóulǎnchē zàntíng fúwù.', en: 'Sorry, tram service is temporarily suspended due to heavy rain.' }
+  // ฐานข้อมูลตารางเวลา (ใบ 1 พ.ย. 2569) + พิกัดจุดแสดง + เงื่อนไขเอวา-ลูน่า + คำศัพท์ทางการ
+  const DEFAULT_KB = `=== ตารางรถราง & ข้อมูลเส้นทาง (Trams) ===
+- สถานีนั่งรถ SAVANNA SAFARI (Savanna Safari Tram / 食草动物区游览车):
+  * พิกัด: อยู่ฝั่งด้านซ้ายของตัวอาคาร (ฝั่งตรงข้ามกับโซน Predator Prowl)
+  * ระยะทาง & เวลา: ระยะทาง 2.43 กม. ใช้เวลานั่งประมาณ 30 นาที
+  * รอบเวลา: 14.30, 15.00, 15.30, 16.00, 17.30, 18.00, 18.30, 19.00, 19.30, 20.00, 20.30, 21.00 น.
+- สถานีนั่งรถ PREDATOR PROWL (Predator Prowl Tram / 猛兽区游览车):
+  * พิกัด: อยู่ฝั่งด้านขวาของตัวอาคาร (ฝั่งตรงข้ามกับสถานี Savanna Safari)
+  * ระยะทาง & เวลา: ระยะทาง 1.13 กม. ใช้เวลานั่งประมาณ 25 นาที
+  * รอบเวลา: 14.30, 15.00, 15.30, 16.00, 17.30, 18.00, 18.30, 19.00, 19.30, 20.00, 20.30, 21.00, 21.30 น.
+- กฎหน้างานสำคัญ:
+  * ลูกค้าสามารถนั่งรถรางแต่ละโซนได้ 1 รอบ ต่อ 1 บัตรเข้าชม
+  * เนื่องจากรถฝั่ง Savanna ระยะทางยาวกว่า (2.43 กม.) จึงมักกลับมาถึงสถานีช้ากว่ารถฝั่ง Predator เล็กน้อย หากลูกค้าเพิ่งลงจาก Savanna และต้องการต่อรถ Predator รอบคาบเกี่ยวทันที สามารถแนะนำให้เดินข้ามไปฝั่งตรงข้ามได้เลย (พนักงานสามารถประสานงานให้รถ Predator รอรับได้)
+
+=== ตารางการแสดง & พิกัดสถานที่ (Shows & Locations) ===
+- โชว์เสือ (Tiger Show / 老虎表演) [25 นาที]:
+  * รอบเวลา: 15.30, 17.30, 19.35 น.
+  * พิกัด: ทางเข้าอยู่ฝั่งตรงข้ามสถานี Savanna Safari (ใกล้กับทางเข้าสถานี Predator Prowl)
+- สัตว์นักล่าแห่งรัตติกาล (Wild Animals Show / 夜行动物表演) [25 นาที]:
+  * รอบเวลา: 16.30, 18.35, 20.15 น.
+  * พิกัด: อยู่ด้านนอกหน้าทางเข้า ใกล้กับรูปปั้นช้างสีขาว
+- การแสดงแดนซ์ซิ่งโชว์ (Dancing Show / 歌舞表演) [10-15 นาที]:
+  * รอบเวลา: 18.40, 19.40, 20.15 น.
+  * พิกัด: ลานหน้าจุดกึ่งกลางของตัวอาคาร (หากฝนตก จะย้ายเข้าไปแสดงภายในตัวอาคาร)
+- การแสดงน้ำพุดนตรี (Musical Fountain Show / 音乐喷泉表演) [10-15 นาที]:
+  * รอบเวลา: 18.10, 19.10, 20.40 น.
+  * พิกัด: ลานหน้าจุดกึ่งกลางของตัวอาคาร
+- คาวบอยโชว์และกิจกรรมป้อนอาหารม้าแคระ (Cowboy Show & Petting Zoo / 牛仔表演) [15 นาที]:
+  * รอบเวลา: 18.00, 19.00 น.
+  * พิกัด: ทางเข้าอยู่ฝั่งตรงข้ามสถานี Savanna Safari (ใกล้กับทางเข้าสถานี Predator Prowl)
+
+=== โซนเดินชม & ทางออก ===
+- เดินชมสัตว์ (Walking Zone / Jaguar Trail Zone / 步行区): เปิด 11.00 - 20.00 น. เข้าได้ทั้ง 2 ฝั่ง (ฝั่งใกล้สถานี Savanna หรือฝั่งใกล้สถานี Predator ทางเข้าเดียวกับป้าย Tiger Show)
+- Learning Center: จันทร์-ศุกร์ 11.00 - 17.00 น. / เสาร์-อาทิตย์ 11.00 - 20.00 น.
+- ทางออก (Exit): ออกทางเดียวกับที่เดินเข้ามา
+
+=== ตารางโชว์ตัว น้องเอวา & น้องลูน่า (Ava and Luna - เสือโคร่งสีทอง) ===
+- สถานที่: จัดแสดงในส่วนแสดงจุด Tiger Show (ชั่วคราวระหว่างรออาคารไทเกอร์เวิลด์เปิดให้บริการ)
+- เงื่อนไขวัน:
+  * วันอังคาร, พฤหัสบดี, ศุกร์, เสาร์ = น้องจะ "ออกแสดงโชว์" ตามรอบเวลา
+  * วันจันทร์, พุธ, อาทิตย์ = ไม่ได้ออกแสดงโชว์ แต่จะ "ปล่อยออกมาเดินเล่น" ให้ชมตามรอบเวลา
+- รอบเวลา:
+  * จันทร์ / พุธ / อาทิตย์ (ปล่อยเดินเล่น): กลางวัน 11.00-14.00 น. | บ่าย 16.00-16.30 น. | กลางคืน 18.00-18.30 น.
+  * อังคาร / พฤหัสบดี / ศุกร์ / เสาร์ (ออกแสดงโชว์): กลางวัน 11.00-14.00 น. | บ่าย 15.30-16.00 น. และ 17.30-18.00 น. | กลางคืน 19.30-20.00 น.`;
+
+  // รายชื่อการแสดง + รถราง สำหรับติ๊กเปิด/ปิดหน้างาน
+  const SERVICE_LIST = [
+    'รถราง Savanna Safari',
+    'รถราง Predator Prowl',
+    'โชว์เสือ (Tiger Show)',
+    'สัตว์นักล่าฯ (Wild Animals)',
+    'แดนซ์ซิ่งโชว์ (Dancing)',
+    'น้ำพุดนตรี (Fountain)',
+    'คาวบอยโชว์ (Cowboy)',
+    'น้องเอวา & ลูน่า'
   ];
 
   window.onload = () => {
     const savedKey = localStorage.getItem('deepseek_key');
-    if (savedKey) document.getElementById('apiKeyInput').value = savedKey;
-    else document.getElementById('apiDetails').open = true;
-
-    if (!localStorage.getItem('safari_book')) {
-      localStorage.setItem('safari_book', JSON.stringify(defaultPhrases));
+    if (savedKey) {
+      document.getElementById('apiKeyInput').value = savedKey;
+      fetchRealBalance();
+    } else {
+      document.getElementById('apiDetails').open = true;
+      document.getElementById('realBalanceText').innerText = 'No API Key';
     }
+
+    if (!localStorage.getItem('safari_book')) localStorage.setItem('safari_book', JSON.stringify([]));
+    if (!localStorage.getItem('safari_vocab')) localStorage.setItem('safari_vocab', JSON.stringify([]));
+    
+    const savedKB = localStorage.getItem('safari_kb') || DEFAULT_KB;
+    document.getElementById('kbInput').value = savedKB;
+
+    renderShowToggles();
+    setCurrentTime();
+    updateLocalTokenText();
   };
 
   function saveKey() {
     localStorage.setItem('deepseek_key', document.getElementById('apiKeyInput').value.trim());
+    fetchRealBalance();
   }
 
   function switchTab(tab) {
-    document.getElementById('tabTranslate').classList.toggle('active', tab === 'translate');
-    document.getElementById('tabBook').classList.toggle('active', tab === 'book');
-    document.getElementById('viewTranslate').style.display = tab === 'translate' ? 'block' : 'none';
-    document.getElementById('viewBook').style.display = tab === 'book' ? 'block' : 'none';
+    ['translate', 'concierge', 'book', 'vocab'].forEach(t => {
+      const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+      const view = document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1));
+      btn.classList.toggle('active', t === tab);
+      view.style.display = t === tab ? 'block' : 'none';
+    });
     if (tab === 'book') renderBook();
+    if (tab === 'vocab') renderVocab();
+    if (tab === 'concierge') setCurrentTime();
   }
 
-  async function translateText() {
+  // ================= REAL DEEPSEEK BALANCE & TOKEN TRACKER =================
+  async function fetchRealBalance() {
     const apiKey = document.getElementById('apiKeyInput').value.trim();
-    const text = document.getElementById('thaiInput').value.trim();
+    const balEl = document.getElementById('realBalanceText');
+    if (!apiKey) { balEl.innerText = 'No Key'; return; }
+
+    balEl.innerText = 'Syncing...';
+    try {
+      const res = await fetch('https://api.deepseek.com/user/balance', {
+        method: 'GET',
+        headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${apiKey}` }
+      });
+      if (!res.ok) throw new Error('API Error');
+      const data = await res.json();
+      if (data.balance_infos && data.balance_infos.length > 0) {
+        const info = data.balance_infos[0];
+        balEl.innerText = `${info.total_balance} ${info.currency}`;
+      } else {
+        balEl.innerText = 'Unavailable';
+      }
+    } catch (e) {
+      // กรณีติด CORS หรือออฟไลน์ ให้แสดงยอดคำนวณสำรองแทน
+      balEl.innerText = 'Sync Blocked (CORS)';
+    }
+  }
+
+  function trackTokens(usage) {
+    if (!usage) return;
+    let total = parseInt(localStorage.getItem('safari_session_tokens') || '0');
+    total += (usage.total_tokens || 0);
+    localStorage.setItem('safari_session_tokens', total.toString());
+    updateLocalTokenText();
+    // อัปเดตยอดจริงตามหลัง 2 วินาที
+    setTimeout(fetchRealBalance, 2000);
+  }
+
+  function updateLocalTokenText() {
+    const total = parseInt(localStorage.getItem('safari_session_tokens') || '0');
+    document.getElementById('localTokenText').innerText = total > 0 ? `(${total.toLocaleString()} tkns)` : '';
+  }
+
+  // ================= CONCIERGE & ROUTE PLANNER =================
+  function renderShowToggles() {
+    const grid = document.getElementById('showToggleGrid');
+    const activeServices = JSON.parse(localStorage.getItem('safari_active_services') || JSON.stringify(SERVICE_LIST));
+    grid.innerHTML = '';
+
+    SERVICE_LIST.forEach(srv => {
+      const isChecked = activeServices.includes(srv);
+      const label = document.createElement('label');
+      label.className = `toggle-item ${isChecked ? '' : 'cancelled'}`;
+      label.innerHTML = `
+        <input type="checkbox" value="${srv}" ${isChecked ? 'checked' : ''} onchange="updateActiveServices()">
+        <span>${srv}</span>
+      `;
+      grid.appendChild(label);
+    });
+  }
+
+  function updateActiveServices() {
+    const checkboxes = document.querySelectorAll('#showToggleGrid input[type="checkbox"]');
+    const active = [];
+    checkboxes.forEach(cb => {
+      cb.parentElement.classList.toggle('cancelled', !cb.checked);
+      if (cb.checked) active.push(cb.value);
+    });
+    localStorage.setItem('safari_active_services', JSON.stringify(active));
+  }
+
+  function setCurrentTime() {
+    const now = new Date();
+    const days = ['วันอาทิตย์', 'วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์'];
+    document.getElementById('daySelect').value = days[now.getDay()];
+    
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('timeSelect').value = `${hh}:${mm}`;
+  }
+
+  function setConciergePrompt(text) {
+    document.getElementById('conciergeInput').value = text;
+  }
+
+  function saveKB() {
+    localStorage.setItem('safari_kb', document.getElementById('kbInput').value);
+    alert('✅ บันทึกข้อมูลหน้างานเรียบร้อย!');
+  }
+
+  function resetDefaultKB() {
+    if (confirm('คืนค่าข้อมูลหน้างานกลับเป็นค่าเริ่มต้นนะ?')) {
+      document.getElementById('kbInput').value = DEFAULT_KB;
+      localStorage.setItem('safari_kb', DEFAULT_KB);
+    }
+  }
+
+  async function askConcierge() {
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
+    const query = document.getElementById('conciergeInput').value.trim();
+    const day = document.getElementById('daySelect').value;
+    const time = document.getElementById('timeSelect').value;
+    const kb = document.getElementById('kbInput').value;
+    const btn = document.getElementById('conciergeBtn');
+
+    if (!apiKey) {
+      alert('Please configure your DeepSeek API Key first.');
+      document.getElementById('apiDetails').open = true;
+      return;
+    }
+    if (!query) return;
+
+    const activeServices = JSON.parse(localStorage.getItem('safari_active_services') || JSON.stringify(SERVICE_LIST));
+    const cancelledServices = SERVICE_LIST.filter(s => !activeServices.includes(s));
+
+    btn.disabled = true;
+    btn.innerText = 'กำลังคำนวณเส้นทางและคำตอบ...';
+
+    const systemPrompt = `คุณคือผู้ช่วยเลขาหน้างานอัจฉริยะของพนักงานบริการที่ "เชียงใหม่ไนท์ซาฟารี" (Chiang Mai Night Safari)
+ข้อมูลปัจจุบัน: วันนี้คือ "${day}" เวลาปัจจุบันคือ "${time} น."
+ฐานข้อมูลตารางเวลา พิกัด และกฎหน้างาน:
+${kb}
+
+สถานะการให้บริการวันนี้:
+- เปิดให้บริการปกติ: ${activeServices.join(', ')}
+- ปิด/งดให้บริการชั่วคราววันนี้: ${cancelledServices.length > 0 ? cancelledServices.join(', ') : 'ไม่มี (เปิดครบทุกรายการ)'}
+
+หน้าที่และกฎเหล็ก:
+1. วิเคราะห์เวลาปัจจุบัน (${time} น.) ระยะทาง และระยะเวลาเดินทาง เพื่อจัดลำดับเส้นทางหรือตอบคำถามลูกค้า โดย **ห้ามแนะนำบริการ/การแสดงที่ปิดหรือยกเลิกเด็ดขาด** (หากลูกค้าถามถึงรายการที่ปิด ให้แจ้งว่างดให้บริการชั่วคราวและแนะนำโซนอื่นแทน)
+2. ในช่อง "staff_advice": สรุปคำแนะนำสำหรับพนักงานอ่านเอง เป็นข้อ ๆ สั้น กระชับ เข้าใจง่ายใน 5 วินาที (ระบุพิกัดซ้าย/ขวาให้ชัดเจน)
+3. ในช่องคำตอบลูกค้า ("zh" และ "en"):
+   - **ต้องสั้น กระชับ สุภาพ เหมือนพนักงานพูดกับลูกค้าหน้างานจริง (ความยาวไม่เกิน 2-3 ประโยค ห้ามเขียนยาวเป็นเรียงความเด็ดขาด!)**
+   - บังคับใช้ชื่อเรียกภาษาอังกฤษและจีนตามที่ระบุในฐานข้อมูลเท่านั้น (เช่น Wild Animals Show / 夜行动物表演, Tiger Show / 老虎表演)
+   - ระบุทิศทาง/พิกัดสั้น ๆ ให้ลูกค้าเดินถูก (เช่น ฝั่งตรงข้าม, ด้านซ้าย/ขวา, หน้ารูปปั้นช้างสีขาว)
+
+ตอบกลับเป็น JSON เท่านั้น:
+{
+  "staff_advice": "คำแนะนำลำดับเวลาและพิกัดสำหรับพนักงาน",
+  "zh": "ประโยคตอบลูกค้าภาษาจีน (สั้น กระชับ)",
+  "pinyin": "พินอิน",
+  "en": "ประโยคตอบลูกค้าภาษาอังกฤษ (สั้น กระชับ)"
+}`;
+
+    try {
+      const response = await fetch('https://api.deepseek.com/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+        body: JSON.stringify({
+          model: 'deepseek-chat',
+          messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: query }],
+          response_format: { type: 'json_object' },
+          temperature: 0.2
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error?.message || 'API Request Failed');
+      trackTokens(data.usage);
+
+      const res = JSON.parse(data.choices[0].message.content);
+      cResult = res;
+
+      document.getElementById('staffAdviceOut').innerText = res.staff_advice;
+      document.getElementById('cZhOut').innerText = res.zh;
+      document.getElementById('cPinyinOut').innerText = res.pinyin;
+      document.getElementById('cEnOut').innerText = res.en;
+      document.getElementById('conciergeResultBox').style.display = 'flex';
+
+    } catch (err) {
+      alert('Error: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerText = 'วิเคราะห์เส้นทาง & คำตอบ';
+    }
+  }
+
+  // ================= TRANSLATOR & TONE ANALYZER =================
+  async function processInput() {
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
+    const text = document.getElementById('mainInput').value.trim();
     const btn = document.getElementById('translateBtn');
 
     if (!apiKey) {
@@ -240,16 +653,44 @@
     }
     if (!text) return;
 
+    const isChineseInput = /[\u4e00-\u9fa5]/.test(text) && !/[ก-๙]/.test(text);
     btn.disabled = true;
-    btn.innerText = 'Translating...';
+    btn.innerText = isChineseInput ? 'Analyzing Chinese & Tones...' : 'Translating & Analyzing...';
 
-    const systemPrompt = `คุณคือล่ามหน้างานมืออาชีพสำหรับธุรกิจบริการและสวนสัตว์ (Chiang Mai Night Safari) 
-หน้าที่: แปลข้อความภาษาไทยของพนักงานให้เป็นภาษาจีนตัวย่อ (พร้อมพินอิน) และภาษาอังกฤษ
-กฎเหล็ก:
-1. ต้อง "สั้น กระชับ แต่สุภาพและเป็นมืออาชีพ" เหมาะกับการสื่อสารหน้างานที่เร่งรีบ
-2. ใช้คำศัพท์ให้ตรงบริบท เช่น รถราง (tram/游览车), รอบการแสดง (show/表演), โซนสัตว์ (zone/园区), สแกนบัตร (scan ticket/检票)
-3. ตอบกลับเป็น JSON เท่านั้น ห้ามมีข้อความอื่นปนเด็ดขาด ตามรูปแบบนี้:
-{"zh": "ภาษาจีน", "pinyin": "คำอ่านพินอิน", "en": "ภาษาอังกฤษ"}`;
+    const systemPrompt = `คุณคือล่ามหน้างานและครูสอนออกเสียงภาษาจีนสำหรับ "คนไทย" (Chiang Mai Night Safari)
+คำศัพท์เฉพาะของสถานที่ (บังคับใช้ตามนี้):
+- โชว์เสือ = Tiger Show / 老虎表演
+- สัตว์นักล่าแห่งรัตติกาล = Wild Animals Show / 夜行动物表演
+- แดนซ์ซิ่งโชว์ = Dancing Show / 歌舞表演
+- น้ำพุดนตรี = Musical Fountain Show / 音乐喷泉表演
+- คาวบอยโชว์ = Cowboy Show / 牛仔表演
+- รถรางโซนสัตว์กินพืช = Savanna Safari Tram / 食草动物区游览车
+- รถรางโซนสัตว์นักล่า = Predator Prowl Tram / 猛兽区游览车
+
+หน้าที่: รับข้อความจากผู้ใช้ (ภาษาไทย หรือ ภาษาจีน) แล้วแปลพร้อมวิเคราะห์การผันเสียงวรรณยุกต์ (Tone Sandhi) แบบละเอียดทีละคำ
+1. การแปล:
+   - ถ้าผู้ใช้ส่ง "ภาษาไทย": แปลเป็นจีนตัวย่อ ("zh") ที่สั้น กระชับ สุภาพ ตรงบริบทงานบริการ, ใส่ไทยเดิมใน ("th"), แปลอังกฤษใน ("en")
+   - ถ้าผู้ใช้ส่ง "ภาษาจีน": คงจีนเดิมใน ("zh"), แปลเป็นไทยสละสลวยใน ("th"), แปลอังกฤษใน ("en")
+2. กฎการตรวจจับการผันเสียง (ห้ามขี้เกียจเด็ดขาด!):
+   - เขียนพินอินรูปเดิมตามพจนานุกรมใน "pinyin_orig"
+   - บังคับตรวจสอบทุกพยางค์ในประโยคทีละคู่ (เสียง 3 ชนเสียง 3, คำว่า 不 bù, คำว่า 一 yī)
+   - ถ้าเจอแม้แต่จุดเดียว: บังคับใส่ "has_tone_change": true, เขียนพินอินที่ผันเสียงแล้วทั้งประโยคใน "pinyin_spoken" และอธิบายเป็น **ภาษาไทยล้วน (ห้ามมีอักษรจีนปนในคำอธิบาย)** ใน "tone_rule"
+   - ถ้าไม่มีการผันเสียงเลย: ใส่ "has_tone_change": false
+3. แตกคำศัพท์สำคัญ 2-4 คำในอาเรย์ "vocab"
+
+ตอบกลับเป็น JSON เท่านั้น:
+{
+  "th": "ความหมายภาษาไทย",
+  "zh": "ประโยคภาษาจีน",
+  "pinyin_orig": "พินอินรูปเดิม",
+  "has_tone_change": true/false,
+  "pinyin_spoken": "พินอินที่ออกเสียงจริงหลังผันเสียง",
+  "tone_rule": "คำอธิบายภาษาไทยล้วนชัดเจน",
+  "en": "ภาษาอังกฤษ",
+  "vocab": [
+    {"zh": "คำศัพท์จีน", "pinyin": "พินอิน", "th": "ความหมายไทย"}
+  ]
+}`;
 
     try {
       const response = await fetch('https://api.deepseek.com/chat/completions', {
@@ -265,40 +706,85 @@
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.error?.message || 'API Request Failed');
+      trackTokens(data.usage);
 
       const res = JSON.parse(data.choices[0].message.content);
-      currentResult = { th: text, zh: res.zh, pinyin: res.pinyin, en: res.en };
+      currentResult = {
+        th: res.th || text,
+        zh: res.zh,
+        pinyin_orig: res.pinyin_orig,
+        has_tone_change: res.has_tone_change,
+        pinyin_spoken: res.pinyin_spoken,
+        tone_rule: res.tone_rule,
+        en: res.en
+      };
+
+      const thBox = document.getElementById('thMeaningOut');
+      if (isChineseInput) {
+        thBox.innerText = `🇹🇭 แปลไทย: ${currentResult.th}`;
+        thBox.style.display = 'block';
+      } else {
+        thBox.style.display = 'none';
+      }
 
       document.getElementById('zhOut').innerText = res.zh;
-      document.getElementById('pinyinOut').innerText = res.pinyin;
+      document.getElementById('pinyinOrigOut').innerText = `Original: ${res.pinyin_orig}`;
       document.getElementById('enOut').innerText = res.en;
+
+      const toneBox = document.getElementById('toneBox');
+      if (res.has_tone_change && res.tone_rule) {
+        document.getElementById('pinyinSpokenOut').innerText = `อ่านจริง: ${res.pinyin_spoken}`;
+        document.getElementById('toneRuleOut').innerText = res.tone_rule;
+        toneBox.style.display = 'block';
+      } else {
+        toneBox.style.display = 'none';
+      }
+
+      const extCard = document.getElementById('extVocabCard');
+      const extList = document.getElementById('extVocabList');
+      extList.innerHTML = '';
+      if (res.vocab && res.vocab.length > 0) {
+        res.vocab.forEach(v => {
+          const row = document.createElement('div');
+          row.className = 'ext-vocab-item';
+          row.innerHTML = `
+            <div class="ev-info">
+              <span class="ev-zh">${v.zh} <span style="font-size:0.85rem; color:var(--accent-green); font-weight:500;">(${v.pinyin})</span></span>
+              <span class="ev-sub">${v.th}</span>
+            </div>
+            <button class="btn-small" onclick="saveVocabItem('${escapeStr(v.zh)}', '${escapeStr(v.pinyin)}', '${escapeStr(v.th)}', this)">+ Save</button>
+          `;
+          extList.appendChild(row);
+        });
+        extCard.style.display = 'block';
+      } else {
+        extCard.style.display = 'none';
+      }
+
       document.getElementById('resultBox').style.display = 'flex';
 
     } catch (err) {
       alert('Error: ' + err.message);
     } finally {
       btn.disabled = false;
-      btn.innerText = 'Translate Now';
+      btn.innerText = 'Translate / Analyze Tone';
     }
   }
 
+  // ================= PHRASEBOOK LOGIC =================
   function saveCurrentToBook() {
     if (!currentResult) return;
     const cat = document.getElementById('saveCategory').value;
     let book = JSON.parse(localStorage.getItem('safari_book') || '[]');
-    
     book.unshift({
-      id: Date.now(),
-      cat: cat,
-      pinned: false,
-      th: currentResult.th,
-      zh: currentResult.zh,
-      pinyin: currentResult.pinyin,
+      id: Date.now(), cat, pinned: false,
+      th: currentResult.th, zh: currentResult.zh,
+      pinyin_orig: currentResult.pinyin_orig, has_tone_change: currentResult.has_tone_change,
+      pinyin_spoken: currentResult.pinyin_spoken, tone_rule: currentResult.tone_rule,
       en: currentResult.en
     });
-
     localStorage.setItem('safari_book', JSON.stringify(book));
-    alert('Saved to Phrasebook successfully.');
+    alert('Saved to Phrasebook!');
   }
 
   function filterCat(cat, btn) {
@@ -320,26 +806,34 @@
     });
 
     filtered.sort((a, b) => (b.pinned === true) - (a.pinned === true));
-
     list.innerHTML = '';
     if (filtered.length === 0) {
-      list.innerHTML = '<div style="text-align:center; color:var(--text-secondary); padding:24px; font-size:0.9rem;">No matching phrases found.</div>';
+      list.innerHTML = '<div style="text-align:center; color:var(--text-secondary); padding:24px; font-size:0.9rem;">No phrases saved yet.</div>';
       return;
     }
 
     filtered.forEach(item => {
+      const pOrig = item.pinyin_orig || item.pinyin || '';
+      const toneHtml = (item.has_tone_change && item.tone_rule) ? `
+        <div class="tone-box" style="margin-bottom: 10px;">
+          <div class="tone-title">💡 กฎการผันเสียง</div>
+          <div class="tone-spoken">อ่านจริง: ${item.pinyin_spoken}</div>
+          <div class="tone-rule">${item.tone_rule}</div>
+        </div>` : '';
+
       const div = document.createElement('div');
-      div.className = `phrase-card ${item.pinned ? 'pinned' : ''}`;
+      div.className = `list-card ${item.pinned ? 'pinned' : ''}`;
       div.innerHTML = `
         <div class="p-top">
           <div class="p-th">${item.pinned ? '★ ' : ''}${item.th}</div>
           <button class="btn-small" onclick="togglePin(${item.id})">${item.pinned ? 'Unpin' : 'Pin'}</button>
         </div>
         <div class="p-zh">${item.zh}</div>
-        <div class="p-pinyin">${item.pinyin}</div>
+        <div class="p-pinyin">Original: ${pOrig}</div>
+        ${toneHtml}
         <div class="p-en">${item.en}</div>
         <div class="p-actions">
-          <button class="btn-small" onclick="openModal('${escapeStr(item.zh)}', '${escapeStr(item.pinyin)}', '${escapeStr(item.en)}')">Fullscreen</button>
+          <button class="btn-small" onclick="openModal('${escapeStr(item.zh)}', '${escapeStr(pOrig)}', '${escapeStr(item.en)}')">Fullscreen</button>
           <button class="btn-small" onclick="speak('${escapeStr(item.zh)}', 'zh-CN')">Audio (ZH)</button>
           <button class="btn-small" onclick="speak('${escapeStr(item.en)}', 'en-US')">Audio (EN)</button>
           <button class="btn-small" onclick="copy('${escapeStr(item.zh)}', this)">Copy ZH</button>
@@ -358,29 +852,194 @@
   }
 
   function deletePhrase(id) {
-    if (!confirm('Are you sure you want to delete this phrase?')) return;
+    if (!confirm('Delete this phrase?')) return;
     let book = JSON.parse(localStorage.getItem('safari_book') || '[]');
     book = book.filter(item => item.id !== id);
     localStorage.setItem('safari_book', JSON.stringify(book));
     renderBook();
   }
 
+  // ================= VOCABULARY LOGIC =================
+  function saveVocabItem(zh, pinyin, th, btn) {
+    let vocab = JSON.parse(localStorage.getItem('safari_vocab') || '[]');
+    if (vocab.some(v => v.zh === zh)) { btn.innerText = 'Saved!'; return; }
+    vocab.unshift({ id: Date.now(), zh, pinyin, th });
+    localStorage.setItem('safari_vocab', JSON.stringify(vocab));
+    btn.innerText = '✅ Saved';
+    btn.style.borderColor = 'var(--accent-green)';
+  }
+
+  function addManualVocab() {
+    const zh = document.getElementById('vZhInput').value.trim();
+    const pinyin = document.getElementById('vPinyinInput').value.trim();
+    const th = document.getElementById('vThInput').value.trim();
+    if (!zh || !th) return alert('กรุณากรอกภาษาจีนและความหมายภาษาไทย');
+
+    let vocab = JSON.parse(localStorage.getItem('safari_vocab') || '[]');
+    vocab.unshift({ id: Date.now(), zh, pinyin, th });
+    localStorage.setItem('safari_vocab', JSON.stringify(vocab));
+
+    document.getElementById('vZhInput').value = '';
+    document.getElementById('vPinyinInput').value = '';
+    document.getElementById('vThInput').value = '';
+    renderVocab();
+  }
+
+  function toggleQuizMode() {
+    quizMode = !quizMode;
+    const btn = document.getElementById('quizToggleBtn');
+    btn.innerText = quizMode ? '🙈 ปิดทายศัพท์' : '👁️ ทายศัพท์';
+    btn.style.borderColor = quizMode ? 'var(--accent-amber)' : 'var(--border-color)';
+    renderVocab();
+  }
+
+  function renderVocab() {
+    let vocab = JSON.parse(localStorage.getItem('safari_vocab') || '[]');
+    const keyword = document.getElementById('searchVocabInput').value.toLowerCase().trim();
+    const list = document.getElementById('vocabList');
+
+    let filtered = vocab.filter(v => v.zh.includes(keyword) || v.pinyin.toLowerCase().includes(keyword) || v.th.toLowerCase().includes(keyword));
+    list.innerHTML = '';
+    if (filtered.length === 0) {
+      list.innerHTML = '<div style="text-align:center; color:var(--text-secondary); padding:24px; font-size:0.9rem;">No vocabulary saved yet.</div>';
+      return;
+    }
+
+    filtered.forEach(v => {
+      const div = document.createElement('div');
+      div.className = 'list-card';
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; gap: 10px;">
+          <div style="flex: 1;">
+            <div class="p-zh" style="font-size:1.35rem;">${v.zh}</div>
+            <div class="p-pinyin" style="display:${quizMode ? 'none' : 'block'};">${v.pinyin}</div>
+            <div class="p-th" style="margin-top:4px; color:${quizMode ? 'transparent' : 'var(--text-primary)'}; background:${quizMode ? '#1f2937' : 'transparent'}; border-radius:4px; user-select:none;" onclick="this.style.color='var(--text-primary)'; this.style.background='transparent';">
+              ${v.th} ${quizMode ? '<span style="color:var(--text-secondary); font-size:0.75rem;">(แตะเพื่อเฉลย)</span>' : ''}
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px; min-width: 75px;">
+            <button class="btn-small" onclick="speak('${escapeStr(v.zh)}', 'zh-CN')">Audio</button>
+            <button class="btn-small" onclick="copy('${escapeStr(v.zh)}', this)">Copy</button>
+            <button class="btn-small" style="color:var(--danger);" onclick="deleteVocab(${v.id})">Delete</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function deleteVocab(id) {
+    if (!confirm('Delete this word?')) return;
+    let vocab = JSON.parse(localStorage.getItem('safari_vocab') || '[]');
+    vocab = vocab.filter(v => v.id !== id);
+    localStorage.setItem('safari_vocab', JSON.stringify(vocab));
+    renderVocab();
+  }
+
+  // ================= EXPORT CSV & JSON BACKUP =================
+  function exportCSV(type) {
+    let csvContent = "\uFEFF";
+    let filename = "";
+
+    if (type === 'phrases') {
+      const book = JSON.parse(localStorage.getItem('safari_book') || '[]');
+      if (book.length === 0) return alert('ยังไม่มีข้อมูลในสมุดประโยคให้ส่งออก!');
+      csvContent += "Category,Thai,Chinese,Pinyin_Original,Pinyin_Spoken,Tone_Rule,English\n";
+      book.forEach(item => {
+        const row = [
+          item.cat,
+          `"${(item.th || '').replace(/"/g, '""')}"`,
+          `"${(item.zh || '').replace(/"/g, '""')}"`,
+          `"${(item.pinyin_orig || item.pinyin || '').replace(/"/g, '""')}"`,
+          `"${(item.pinyin_spoken || '').replace(/"/g, '""')}"`,
+          `"${(item.tone_rule || '').replace(/"/g, '""')}"`,
+          `"${(item.en || '').replace(/"/g, '""')}"`
+        ];
+        csvContent += row.join(",") + "\n";
+      });
+      filename = "SafariAssist_Phrasebook.csv";
+    } else {
+      const vocab = JSON.parse(localStorage.getItem('safari_vocab') || '[]');
+      if (vocab.length === 0) return alert('ยังไม่มีคำศัพท์ในคลังให้ส่งออก!');
+      csvContent += "Chinese,Pinyin,Thai_Meaning\n";
+      vocab.forEach(v => {
+        const row = [
+          `"${(v.zh || '').replace(/"/g, '""')}"`,
+          `"${(v.pinyin || '').replace(/"/g, '""')}"`,
+          `"${(v.th || '').replace(/"/g, '""')}"`
+        ];
+        csvContent += row.join(",") + "\n";
+      });
+      filename = "SafariAssist_Vocabulary.csv";
+    }
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function exportAllData() {
+    const backupObj = {
+      phrases: JSON.parse(localStorage.getItem('safari_book') || '[]'),
+      vocab: JSON.parse(localStorage.getItem('safari_vocab') || '[]'),
+      kb: localStorage.getItem('safari_kb') || DEFAULT_KB
+    };
+    fallbackCopy(JSON.stringify(backupObj), { innerText: '' });
+    alert('Backup JSON (Phrases + Vocabulary + Schedule) copied to clipboard!');
+  }
+
+  function toggleRestoreBox() {
+    const box = document.getElementById('restoreBox');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function confirmRestore() {
+    const raw = document.getElementById('restoreInput').value.trim();
+    if (!raw) return alert('Please paste your backup JSON first.');
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        localStorage.setItem('safari_book', JSON.stringify(parsed));
+        alert(`Restored ${parsed.length} phrases!`);
+      } else if (parsed.phrases || parsed.vocab || parsed.kb) {
+        if (parsed.phrases) localStorage.setItem('safari_book', JSON.stringify(parsed.phrases));
+        if (parsed.vocab) localStorage.setItem('safari_vocab', JSON.stringify(parsed.vocab));
+        if (parsed.kb) {
+          localStorage.setItem('safari_kb', parsed.kb);
+          document.getElementById('kbInput').value = parsed.kb;
+        }
+        alert('Restore complete!');
+      } else {
+        throw new Error('Invalid format');
+      }
+      renderBook();
+      document.getElementById('restoreInput').value = '';
+      document.getElementById('restoreBox').style.display = 'none';
+    } catch (e) {
+      alert('Restore failed: Invalid JSON format.');
+    }
+  }
+
+  // ================= UTILITIES =================
   function openModal(zh, pinyin, en) {
     document.getElementById('mZh').innerText = zh;
     document.getElementById('mPinyin').innerText = pinyin;
     document.getElementById('mEn').innerText = en;
     document.getElementById('flashModal').style.display = 'flex';
   }
-  function closeModal() {
-    document.getElementById('flashModal').style.display = 'none';
-  }
+  function closeModal() { document.getElementById('flashModal').style.display = 'none'; }
 
   function speak(text, lang) {
-    if (!('speechSynthesis' in window)) return alert('Text-to-Speech is not supported in this browser.');
+    if (!('speechSynthesis' in window)) return alert('Text-to-Speech not supported.');
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
-    u.rate = 0.9;
+    u.rate = 0.85;
     window.speechSynthesis.speak(u);
   }
 
@@ -400,12 +1059,7 @@
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    try {
-      document.execCommand('copy');
-      showCopied(btn);
-    } catch (err) {
-      alert('Failed to copy text.');
-    }
+    try { document.execCommand('copy'); showCopied(btn); } catch (e) {}
     document.body.removeChild(textArea);
   }
 
@@ -416,51 +1070,7 @@
   }
 
   function escapeStr(str) {
-    return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-  }
-
-  function exportData() {
-    const data = localStorage.getItem('safari_book');
-    const textArea = document.createElement("textarea");
-    textArea.value = data;
-    textArea.style.position = "fixed";
-    textArea.style.left = "-9999px";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
-      alert('Backup JSON copied to clipboard. Please save it in a safe place.');
-    } catch (err) {
-      prompt('Copy your backup JSON below:', data);
-    }
-    document.body.removeChild(textArea);
-  }
-
-  function toggleRestoreBox() {
-    const box = document.getElementById('restoreBox');
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  }
-
-  function confirmRestore() {
-    const raw = document.getElementById('restoreInput').value.trim();
-    if (!raw) {
-      alert('Please paste your backup JSON code first.');
-      return;
-    }
-    try {
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) throw new Error('Invalid format');
-      
-      localStorage.setItem('safari_book', JSON.stringify(parsed));
-      renderBook();
-      
-      document.getElementById('restoreInput').value = '';
-      document.getElementById('restoreBox').style.display = 'none';
-      alert(`Restore complete! Loaded ${parsed.length} phrases.`);
-    } catch (e) {
-      alert('Restore failed: Invalid JSON format.');
-    }
+    return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
   }
 </script>
 
