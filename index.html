@@ -65,6 +65,7 @@
     .card.en { border-left-color: var(--accent-blue); }
     .card.vocab { border-left-color: var(--accent-amber); }
     .card.concierge { border-left-color: var(--accent-purple); }
+    .card.th-card { border-left-color: #64748b; }
     .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .label { font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
     .action-btns { display: flex; gap: 6px; }
@@ -72,9 +73,9 @@
     .btn-small:hover { background: #374151; }
     
     .th-meaning-box { font-size: 0.95rem; color: #93c5fd; font-weight: 600; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); }
-    .zh-text { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.4; }
-    .pinyin-orig { font-size: 0.92rem; color: var(--accent-green); font-weight: 500; }
-    .en-text { font-size: 1.1rem; font-weight: 600; color: #fff; line-height: 1.4; }
+    .zh-text { font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.45; }
+    .pinyin-orig { font-size: 0.92rem; color: var(--accent-green); font-weight: 500; line-height: 1.4; }
+    .en-text { font-size: 1.05rem; font-weight: 600; color: #fff; line-height: 1.5; }
 
     /* Tone Sandhi Box */
     .tone-box { margin-top: 10px; padding: 10px 12px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; font-size: 0.85rem; }
@@ -83,8 +84,14 @@
     .tone-rule { color: #d1d5db; font-size: 0.8rem; line-height: 1.4; }
 
     /* Concierge Specific UI */
-    .time-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
-    .time-input { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.95rem; flex: 1; }
+    .time-row { display: flex; gap: 6px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; }
+    .time-select { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; padding: 9px 8px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; }
+    
+    /* Weather Selector */
+    .weather-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 12px; }
+    .weather-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 8px 4px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s; text-align: center; }
+    .weather-btn.active { border-color: var(--accent-purple); background: rgba(139, 92, 246, 0.18); color: #fff; }
+
     .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
     .chip { background: var(--bg-input); border: 1px solid var(--border-color); color: #e5e7eb; padding: 6px 10px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; transition: 0.15s; }
     .chip:hover { border-color: var(--accent-purple); color: #fff; }
@@ -96,7 +103,7 @@
     .toggle-item input { accent-color: var(--accent-purple); width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
     .toggle-item.cancelled { opacity: 0.5; text-decoration: line-through; border: 1px solid rgba(239, 68, 68, 0.4); }
 
-    .staff-advice { font-size: 0.95rem; line-height: 1.6; color: #f3f4f6; white-space: pre-line; }
+    .staff-advice { font-size: 0.92rem; line-height: 1.75; color: #f3f4f6; white-space: pre-line; }
 
     /* Save Bar */
     .save-bar { display: flex; gap: 8px; background: var(--bg-card); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color); align-items: center; }
@@ -130,9 +137,9 @@
 
     /* Fullscreen Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #030712; z-index: 999; flex-direction: column; justify-content: center; align-items: center; padding: 28px; text-align: center; }
-    .modal-zh { font-size: 2.3rem; font-weight: 700; color: var(--accent-green); margin-bottom: 12px; line-height: 1.35; }
-    .modal-pinyin { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 28px; }
-    .modal-en { font-size: 1.5rem; font-weight: 600; color: #fff; line-height: 1.4; }
+    .modal-zh { font-size: 2.2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 12px; line-height: 1.35; }
+    .modal-pinyin { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 24px; }
+    .modal-en { font-size: 1.4rem; font-weight: 600; color: #fff; line-height: 1.4; }
     .modal-close { position: absolute; top: 24px; right: 24px; background: var(--bg-input); color: #fff; border: 1px solid var(--border-color); padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
 
     /* Backup & Footer */
@@ -245,9 +252,9 @@
       <div class="toggle-grid" id="showToggleGrid"></div>
     </div>
 
-    <!-- Time & Day Selector -->
+    <!-- 12-Hour Time & Day Selector -->
     <div class="time-row">
-      <select id="daySelect" class="time-input" style="max-width: 135px;">
+      <select id="daySelect" class="time-select" style="flex: 1;">
         <option value="วันจันทร์">วันจันทร์</option>
         <option value="วันอังคาร">วันอังคาร</option>
         <option value="วันพุธ">วันพุธ</option>
@@ -256,8 +263,21 @@
         <option value="วันเสาร์">วันเสาร์</option>
         <option value="วันอาทิตย์">วันอาทิตย์</option>
       </select>
-      <input type="time" id="timeSelect" class="time-input">
-      <button class="btn-small" onclick="setCurrentTime()" style="padding: 10px;">เวลาปัจจุบัน</button>
+      <select id="hourSelect" class="time-select"></select>
+      <span style="color:#aaa; font-weight:bold;">:</span>
+      <select id="minSelect" class="time-select"></select>
+      <select id="ampmSelect" class="time-select">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+      <button class="btn-small" onclick="setCurrentTime()" style="padding: 9px 10px;">ตอนนี้</button>
+    </div>
+
+    <!-- Weather Status Selector -->
+    <div class="weather-row">
+      <button type="button" class="weather-btn active" onclick="setWeather('อากาศปกติ (แดดออก/โปร่ง)', this)">☀️ อากาศปกติ</button>
+      <button type="button" class="weather-btn" onclick="setWeather('ฟ้าครึ้ม / มีแนวโน้มว่าฝนอาจจะตก', this)">☁️ ฟ้าครึ้ม/เสี่ยงฝน</button>
+      <button type="button" class="weather-btn" onclick="setWeather('กำลังมีฝนตก', this)">🌧️ ฝนตก</button>
     </div>
 
     <!-- Quick Scenarios -->
@@ -268,7 +288,7 @@
       <span class="chip" onclick="setConciergePrompt('ลูกค้าถามรอบโชว์ตัวน้องเอวา กับ น้องลูน่า วันนี้มีรอบกี่โมง แสดงตรงไหน')">🐯 รอบน้องเอวา & ลูน่า</span>
     </div>
 
-    <textarea id="conciergeInput" placeholder="พิมพ์สถานการณ์หรือคำถามลูกค้า (เช่น: ลูกค้าเพิ่งลงจาก Savanna ตอน 19.30 ไปดูโชว์เสือทันมั้ย)..."></textarea>
+    <textarea id="conciergeInput" placeholder="พิมพ์สถานการณ์หรือคำถามลูกค้า (เช่น: ลูกค้าเพิ่งมาถึงตอนนี้ ไปไหนก่อนดี)..."></textarea>
     <button class="btn-main btn-purple" id="conciergeBtn" onclick="askConcierge()">วิเคราะห์เส้นทาง & คำตอบ</button>
 
     <!-- Concierge Result -->
@@ -278,6 +298,13 @@
           <span class="label" style="color: #c4b5fd;">📋 คำแนะนำสำหรับมึง (Staff Guide)</span>
         </div>
         <div class="staff-advice" id="staffAdviceOut">-</div>
+      </div>
+
+      <div class="card th-card">
+        <div class="card-header">
+          <span class="label" style="color: #94a3b8;">🇹🇭 คำแปลภาษาไทย (จากประโยคตอบลูกค้า)</span>
+        </div>
+        <div class="en-text" id="cThOut" style="font-size: 0.98rem; color: #e2e8f0;">-</div>
       </div>
 
       <div class="card">
@@ -295,10 +322,10 @@
 
       <div class="card en">
         <div class="card-header">
-          <span class="label">🇬🇧 คำตอบสำหรับลูกค้าต่างชาติ</span>
+          <span class="label">🇬🇧 คำตอบสำหรับลูกค้าต่างชาติ (พร้อมคำอ่านเวลา)</span>
           <div class="action-btns">
-            <button class="btn-small" onclick="speak(cResult.en, 'en-US')">Audio</button>
-            <button class="btn-small" onclick="copy(cResult.en, this)">Copy</button>
+            <button class="btn-small" onclick="speak(cleanSpeechText(cResult.en), 'en-US')">Audio</button>
+            <button class="btn-small" onclick="copy(cleanSpeechText(cResult.en), this)">Copy</button>
           </div>
         </div>
         <div class="en-text" id="cEnOut">-</div>
@@ -370,41 +397,47 @@
   let cResult = null;
   let currentCat = 'all';
   let quizMode = false;
+  let currentWeather = 'อากาศปกติ (แดดออก/โปร่ง)';
 
-  // ฐานข้อมูลตารางเวลา (ใบ 1 พ.ย. 2569) + พิกัดจุดแสดง + เงื่อนไขเอวา-ลูน่า + คำศัพท์ทางการ
-  const DEFAULT_KB = `=== ตารางรถราง & ข้อมูลเส้นทาง (Trams) ===
+  // ฐานข้อมูลตารางเวลา (ระบบ 12 ชั่วโมง AM/PM) + พิกัด + เงื่อนไขหน้างานจริง
+  const DEFAULT_KB = `=== ตารางรถราง & ข้อมูลเส้นทาง (Trams - ระบบเวลา 12 ชม.) ===
 - สถานีนั่งรถ SAVANNA SAFARI (Savanna Safari Tram / 食草动物区游览车):
   * พิกัด: อยู่ฝั่งด้านซ้ายของตัวอาคาร (ฝั่งตรงข้ามกับโซน Predator Prowl)
   * ระยะทาง & เวลา: ระยะทาง 2.43 กม. ใช้เวลานั่งประมาณ 30 นาที
-  * รอบเวลา: 14.30, 15.00, 15.30, 16.00, 17.30, 18.00, 18.30, 19.00, 19.30, 20.00, 20.30, 21.00 น.
+  * รอบเวลา: 2:30 PM, 3:00 PM, 3:30 PM, 4:00 PM, 5:30 PM, 6:00 PM, 6:30 PM, 7:00 PM, 7:30 PM, 8:00 PM, 8:30 PM, 9:00 PM
 - สถานีนั่งรถ PREDATOR PROWL (Predator Prowl Tram / 猛兽区游览车):
   * พิกัด: อยู่ฝั่งด้านขวาของตัวอาคาร (ฝั่งตรงข้ามกับสถานี Savanna Safari)
   * ระยะทาง & เวลา: ระยะทาง 1.13 กม. ใช้เวลานั่งประมาณ 25 นาที
-  * รอบเวลา: 14.30, 15.00, 15.30, 16.00, 17.30, 18.00, 18.30, 19.00, 19.30, 20.00, 20.30, 21.00, 21.30 น.
-- กฎหน้างานสำคัญ:
-  * ลูกค้าสามารถนั่งรถรางแต่ละโซนได้ 1 รอบ ต่อ 1 บัตรเข้าชม
-  * เนื่องจากรถฝั่ง Savanna ระยะทางยาวกว่า (2.43 กม.) จึงมักกลับมาถึงสถานีช้ากว่ารถฝั่ง Predator เล็กน้อย หากลูกค้าเพิ่งลงจาก Savanna และต้องการต่อรถ Predator รอบคาบเกี่ยวทันที สามารถแนะนำให้เดินข้ามไปฝั่งตรงข้ามได้เลย (พนักงานสามารถประสานงานให้รถ Predator รอรับได้)
+  * รอบเวลา: 2:30 PM, 3:00 PM, 3:30 PM, 4:00 PM, 5:30 PM, 6:00 PM, 6:30 PM, 7:00 PM, 7:30 PM, 8:00 PM, 8:30 PM, 9:00 PM, 9:30 PM
+- กฎหน้างานสำคัญของรถราง:
+  * รถรางเป็นรถเปิดข้างคล้ายรถกอล์ฟ (โดนละอองฝนสาดได้บ้าง ไม่ใช่ในร่ม 100%) และนั่งได้ 1 รอบ ต่อ 1 บัตร
+  * ขึ้นกลางคันไม่ได้เด็ดขาด เปิดให้เข้าแถว 10 นาทีก่อนรถออก
+  * **กฎการรอเลท (Buffer):** รถรางสามารถออกเลทจากเวลาตามตารางได้ไม่เกิน 5 นาที (แต่ฝั่ง Savanna ไม่ควรเกิน 3 นาทีเพราะเส้นทางยาว) ดังนั้นหากการแสดงเพิ่งจบพอดีเวลาออกรถ ลูกค้ายังพอวิ่งมาขึ้นรถทันได้!
+  * เนื่องจาก Savanna ยาวกว่า (2.43 กม.) มักลงช้ากว่า Predator หากลูกค้าลง Savanna แล้วจะต่อ Predator ทันที พนักงานสามารถวอแจ้งให้รถ Predator รอรับได้
 
-=== ตารางการแสดง & พิกัดสถานที่ (Shows & Locations) ===
-- โชว์เสือ (Tiger Show / 老虎表演) [25 นาที]:
-  * รอบเวลา: 15.30, 17.30, 19.35 น.
-  * พิกัด: ทางเข้าอยู่ฝั่งตรงข้ามสถานี Savanna Safari (ใกล้กับทางเข้าสถานี Predator Prowl)
-- สัตว์นักล่าแห่งรัตติกาล (Wild Animals Show / 夜行动物表演) [25 นาที]:
-  * รอบเวลา: 16.30, 18.35, 20.15 น.
+=== ตารางการแสดง & ระยะเวลาจริง (Shows & Locations) ===
+*กฎสำคัญ: ทุกการแสดงตามตารางด้านล่าง จะแสดงจบก่อนเวลาจริงประมาณ 3-5 นาที ทำให้ลูกค้ามีเวลาวิ่งไปขึ้นรถรางหรือต่อรอบถัดไปได้ทัน!*
+
+- โชว์เสือ (Tiger Show / 老虎表演) [ตามป้าย 25 นาที / จบจริง ~20-22 นาที]:
+  * รอบเวลา: 3:30 PM (จบ ~3:52 PM), 5:30 PM (จบ ~5:52 PM), 7:35 PM (จบ ~7:57 PM)
+  * พิกัด: ทางเข้าอยู่ฝั่งตรงข้ามสถานี Savanna Safari (ใกล้ทางเข้า Predator Prowl)
+- สัตว์นักล่าแห่งรัตติกาล (Wild Animals Show / 夜行动物表演) [ตามป้าย 25 นาที / จบจริง ~20-22 นาที]:
+  * รอบเวลา: 4:30 PM (จบ ~4:52 PM), 6:35 PM (จบ ~6:57 PM), 8:15 PM (จบ ~8:37 PM)
   * พิกัด: อยู่ด้านนอกหน้าทางเข้า ใกล้กับรูปปั้นช้างสีขาว
-- การแสดงแดนซ์ซิ่งโชว์ (Dancing Show / 歌舞表演) [10-15 นาที]:
-  * รอบเวลา: 18.40, 19.40, 20.15 น.
+- การแสดงแดนซ์ซิ่งโชว์ (Dancing Show / 歌舞表演) [ตามป้าย 10-15 นาที / จบจริง ~10 นาที]:
+  * รอบเวลา: 6:40 PM (จบ ~6:50 PM), 7:40 PM (จบ ~7:50 PM), 8:15 PM (จบ ~8:25 PM)
   * พิกัด: ลานหน้าจุดกึ่งกลางของตัวอาคาร (หากฝนตก จะย้ายเข้าไปแสดงภายในตัวอาคาร)
-- การแสดงน้ำพุดนตรี (Musical Fountain Show / 音乐喷泉表演) [10-15 นาที]:
-  * รอบเวลา: 18.10, 19.10, 20.40 น.
+- การแสดงน้ำพุดนตรี (Musical Fountain Show / 音乐喷泉表演) [ตามป้าย 10-15 นาที / จบจริง ~10 นาที]:
+  * รอบเวลา: 6:10 PM (จบ ~6:20 PM), 7:10 PM (จบ ~7:20 PM), 8:40 PM (จบ ~8:50 PM)
   * พิกัด: ลานหน้าจุดกึ่งกลางของตัวอาคาร
-- คาวบอยโชว์และกิจกรรมป้อนอาหารม้าแคระ (Cowboy Show & Petting Zoo / 牛仔表演) [15 นาที]:
-  * รอบเวลา: 18.00, 19.00 น.
-  * พิกัด: ทางเข้าอยู่ฝั่งตรงข้ามสถานี Savanna Safari (ใกล้กับทางเข้าสถานี Predator Prowl)
+- คาวบอยโชว์และกิจกรรมป้อนอาหารสัตว์ (Cowboy Show & Petting Zoo / 牛仔表演) [โชว์ 15 นาที / จบจริง ~12 นาที]:
+  * รอบเวลา: 6:00 PM (จบโชว์ ~6:12 PM), 7:00 PM (จบโชว์ ~7:12 PM)
+  * **กิจกรรมเสริมหลังจบโชว์:** หลัง Cowboy Show จบ สามารถอยู่ป้อนอาหารม้าแคระ แกะ แพะ ต่อได้ ซึ่งจะกินเวลาเพิ่มอีก 5-10 นาที (รวมเป็น ~20 นาที) หากลูกค้าต้องรีบไปดูโชว์อื่นต่อ แนะนำให้ข้ามการป้อนอาหารหรือป้อนแค่แป๊บเดียว
+  * พิกัด: ทางเข้าอยู่ฝั่งตรงข้ามสถานี Savanna Safari (ใกล้ทางเข้า Predator Prowl)
 
 === โซนเดินชม & ทางออก ===
-- เดินชมสัตว์ (Walking Zone / Jaguar Trail Zone / 步行区): เปิด 11.00 - 20.00 น. เข้าได้ทั้ง 2 ฝั่ง (ฝั่งใกล้สถานี Savanna หรือฝั่งใกล้สถานี Predator ทางเข้าเดียวกับป้าย Tiger Show)
-- Learning Center: จันทร์-ศุกร์ 11.00 - 17.00 น. / เสาร์-อาทิตย์ 11.00 - 20.00 น.
+- เดินชมสัตว์ (Walking Zone / Jaguar Trail Zone / 步行区): เปิด 11:00 AM - 8:00 PM เข้าได้ทั้ง 2 ฝั่ง (ฝั่งใกล้สถานี Savanna หรือฝั่งใกล้สถานี Predator ทางเข้าเดียวกับป้าย Tiger Show)
+- Learning Center: จันทร์-ศุกร์ 11:00 AM - 5:00 PM / เสาร์-อาทิตย์ 11:00 AM - 8:00 PM
 - ทางออก (Exit): ออกทางเดียวกับที่เดินเข้ามา
 
 === ตารางโชว์ตัว น้องเอวา & น้องลูน่า (Ava and Luna - เสือโคร่งสีทอง) ===
@@ -413,10 +446,9 @@
   * วันอังคาร, พฤหัสบดี, ศุกร์, เสาร์ = น้องจะ "ออกแสดงโชว์" ตามรอบเวลา
   * วันจันทร์, พุธ, อาทิตย์ = ไม่ได้ออกแสดงโชว์ แต่จะ "ปล่อยออกมาเดินเล่น" ให้ชมตามรอบเวลา
 - รอบเวลา:
-  * จันทร์ / พุธ / อาทิตย์ (ปล่อยเดินเล่น): กลางวัน 11.00-14.00 น. | บ่าย 16.00-16.30 น. | กลางคืน 18.00-18.30 น.
-  * อังคาร / พฤหัสบดี / ศุกร์ / เสาร์ (ออกแสดงโชว์): กลางวัน 11.00-14.00 น. | บ่าย 15.30-16.00 น. และ 17.30-18.00 น. | กลางคืน 19.30-20.00 น.`;
+  * จันทร์ / พุธ / อาทิตย์ (ปล่อยเดินเล่น): กลางวัน 11:00 AM - 2:00 PM | บ่าย 4:00 PM - 4:30 PM | กลางคืน 6:00 PM - 6:30 PM
+  * อังคาร / พฤหัสบดี / ศุกร์ / เสาร์ (ออกแสดงโชว์): กลางวัน 11:00 AM - 2:00 PM | บ่าย 3:30 PM - 4:00 PM และ 5:30 PM - 6:00 PM | กลางคืน 7:30 PM - 8:00 PM`;
 
-  // รายชื่อการแสดง + รถราง สำหรับติ๊กเปิด/ปิดหน้างาน
   const SERVICE_LIST = [
     'รถราง Savanna Safari',
     'รถราง Predator Prowl',
@@ -429,6 +461,7 @@
   ];
 
   window.onload = () => {
+    initTimeDropdowns();
     const savedKey = localStorage.getItem('deepseek_key');
     if (savedKey) {
       document.getElementById('apiKeyInput').value = savedKey;
@@ -448,6 +481,18 @@
     setCurrentTime();
     updateLocalTokenText();
   };
+
+  function initTimeDropdowns() {
+    const hSel = document.getElementById('hourSelect');
+    const mSel = document.getElementById('minSelect');
+    for (let h = 1; h <= 12; h++) {
+      hSel.innerHTML += `<option value="${h}">${h}</option>`;
+    }
+    for (let m = 0; m < 60; m++) {
+      const mm = String(m).padStart(2, '0');
+      mSel.innerHTML += `<option value="${mm}">${mm}</option>`;
+    }
+  }
 
   function saveKey() {
     localStorage.setItem('deepseek_key', document.getElementById('apiKeyInput').value.trim());
@@ -487,7 +532,6 @@
         balEl.innerText = 'Unavailable';
       }
     } catch (e) {
-      // กรณีติด CORS หรือออฟไลน์ ให้แสดงยอดคำนวณสำรองแทน
       balEl.innerText = 'Sync Blocked (CORS)';
     }
   }
@@ -498,7 +542,6 @@
     total += (usage.total_tokens || 0);
     localStorage.setItem('safari_session_tokens', total.toString());
     updateLocalTokenText();
-    // อัปเดตยอดจริงตามหลัง 2 วินาที
     setTimeout(fetchRealBalance, 2000);
   }
 
@@ -540,9 +583,21 @@
     const days = ['วันอาทิตย์', 'วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์'];
     document.getElementById('daySelect').value = days[now.getDay()];
     
-    const hh = String(now.getHours()).padStart(2, '0');
+    let h = now.getHours();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12; // 0 นาฬิกา ให้เป็น 12
     const mm = String(now.getMinutes()).padStart(2, '0');
-    document.getElementById('timeSelect').value = `${hh}:${mm}`;
+
+    document.getElementById('hourSelect').value = h;
+    document.getElementById('minSelect').value = mm;
+    document.getElementById('ampmSelect').value = ampm;
+  }
+
+  function setWeather(status, btn) {
+    currentWeather = status;
+    document.querySelectorAll('.weather-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   }
 
   function setConciergePrompt(text) {
@@ -561,11 +616,16 @@
     }
   }
 
+  // ลบวงเล็บคำอ่านเวลาออกตอนกด Copy หรือสั่ง Audio พูด
+  function cleanSpeechText(text) {
+    return (text || '').replace(/\s*\([^)]*\)/g, '');
+  }
+
   async function askConcierge() {
     const apiKey = document.getElementById('apiKeyInput').value.trim();
     const query = document.getElementById('conciergeInput').value.trim();
     const day = document.getElementById('daySelect').value;
-    const time = document.getElementById('timeSelect').value;
+    const time12 = `${document.getElementById('hourSelect').value}:${document.getElementById('minSelect').value} ${document.getElementById('ampmSelect').value}`;
     const kb = document.getElementById('kbInput').value;
     const btn = document.getElementById('conciergeBtn');
 
@@ -583,7 +643,9 @@
     btn.innerText = 'กำลังคำนวณเส้นทางและคำตอบ...';
 
     const systemPrompt = `คุณคือผู้ช่วยเลขาหน้างานอัจฉริยะของพนักงานบริการที่ "เชียงใหม่ไนท์ซาฟารี" (Chiang Mai Night Safari)
-ข้อมูลปัจจุบัน: วันนี้คือ "${day}" เวลาปัจจุบันคือ "${time} น."
+ข้อมูลปัจจุบัน: วันนี้คือ "${day}" เวลาปัจจุบันคือ "${time12}" (ระบบเวลา 12 ชั่วโมง AM/PM)
+สภาพอากาศปัจจุบัน: "${currentWeather}"
+
 ฐานข้อมูลตารางเวลา พิกัด และกฎหน้างาน:
 ${kb}
 
@@ -591,20 +653,30 @@ ${kb}
 - เปิดให้บริการปกติ: ${activeServices.join(', ')}
 - ปิด/งดให้บริการชั่วคราววันนี้: ${cancelledServices.length > 0 ? cancelledServices.join(', ') : 'ไม่มี (เปิดครบทุกรายการ)'}
 
-หน้าที่และกฎเหล็ก:
-1. วิเคราะห์เวลาปัจจุบัน (${time} น.) ระยะทาง และระยะเวลาเดินทาง เพื่อจัดลำดับเส้นทางหรือตอบคำถามลูกค้า โดย **ห้ามแนะนำบริการ/การแสดงที่ปิดหรือยกเลิกเด็ดขาด** (หากลูกค้าถามถึงรายการที่ปิด ให้แจ้งว่างดให้บริการชั่วคราวและแนะนำโซนอื่นแทน)
-2. ในช่อง "staff_advice": สรุปคำแนะนำสำหรับพนักงานอ่านเอง เป็นข้อ ๆ สั้น กระชับ เข้าใจง่ายใน 5 วินาที (ระบุพิกัดซ้าย/ขวาให้ชัดเจน)
-3. ในช่องคำตอบลูกค้า ("zh" และ "en"):
-   - **ต้องสั้น กระชับ สุภาพ เหมือนพนักงานพูดกับลูกค้าหน้างานจริง (ความยาวไม่เกิน 2-3 ประโยค ห้ามเขียนยาวเป็นเรียงความเด็ดขาด!)**
-   - บังคับใช้ชื่อเรียกภาษาอังกฤษและจีนตามที่ระบุในฐานข้อมูลเท่านั้น (เช่น Wild Animals Show / 夜行动物表演, Tiger Show / 老虎表演)
-   - ระบุทิศทาง/พิกัดสั้น ๆ ให้ลูกค้าเดินถูก (เช่น ฝั่งตรงข้าม, ด้านซ้าย/ขวา, หน้ารูปปั้นช้างสีขาว)
+หน้าที่และกฎเหล็กในการคำนวณเวลา:
+1. คำนวณเวลาจบจริงของทุกโชว์ (จบก่อนป้าย 3-5 นาที) ห้ามแนะนำรอบที่จบไปแล้ว และห้ามจัดเวลาซ้อนทับกันเด็ดขาด
+2. ใช้กฎหน้างาน: รถรางออกเลทได้ 3-5 นาที (Savanna ไม่เกิน 3 นาที) และเปิดต่อแถวก่อน 10 นาที / หลัง Cowboy Show มีป้อนอาหารม้าแคระ 5-10 นาที
+3. จัดลำดับให้คุ้มค่าตั๋วที่สุด (เช็กรอบสุดท้ายของแต่ละโชว์ก่อน เช่น Cowboy 7:00 PM, Tiger Show 7:35 PM ส่วนรถรางมีรอบดึกเก็บทีหลังได้)
+4. การแสดงที่เพิ่งเริ่มไปไม่เกิน 5-10 นาที ให้แนะนำได้แต่โน้ตว่า "ทันช่วงกลางโชว์" / ห้ามแนะนำรายการที่ปิด / ถ้าฝนตกหรือฟ้าครึ้มให้แจ้งเงื่อนไขสภาพอากาศ (Dancing Show ย้ายเข้าอาคาร, รถรางเป็นรถเปิดข้างโดนละอองฝนได้)
+
+รูปแบบการแสดงผลใน "staff_advice" (บังคับสั้น กระชับ ประหยัด Token ห้ามเขียนข้อ 1-10 ยาว ๆ เด็ดขาด!):
+- **ใช้ภาษาไทย 100% ห้ามมีอักษรจีนปนแม้แต่ตัวเดียว!**
+- จัดรูปแบบเฉพาะ 3 ส่วนนี้เท่านั้น (ขึ้นบรรทัดใหม่ด้วย \\n):
+  * **Option A (เก็บครบสุด):** เรียงลำดับเวลา + ชื่อกิจกรรม + พิกัดซ้าย/ขวา แบบสั้น ๆ
+  * **Option B (เดินสบาย ๆ):** ทางเลือกสำรองกรณีไม่อยากรีบ
+  * **⚠️ หมายเหตุ:** เตือนสั้น ๆ ว่าพลาดโชว์ไหนไปแล้วบ้าง, จุดไหนทันกลางโชว์, เผื่อเวลาป้อนอาหารม้าแคระ หรือข้อควรระวังเรื่องฝน/รอรถ
+
+รูปแบบคำตอบลูกค้า ("th_reply", "zh", "en"):
+- **สั้น กระชับ สุภาพ ไม่เกิน 2 ประโยค** ใช้เวลา 12 ชม. ทั้งหมด
+- ในช่อง "en": **ทุกครั้งที่มีตัวเลขเวลา ให้ใส่คำอ่านภาษาอังกฤษในวงเล็บกำกับไว้ข้างหลังทันที** เช่น \`6:00 PM (six o'clock PM)\`
 
 ตอบกลับเป็น JSON เท่านั้น:
 {
-  "staff_advice": "คำแนะนำลำดับเวลาและพิกัดสำหรับพนักงาน",
-  "zh": "ประโยคตอบลูกค้าภาษาจีน (สั้น กระชับ)",
+  "staff_advice": "Option A (เก็บครบสุด): ...\\nOption B (เดินสบาย ๆ): ...\\n⚠️ หมายเหตุ: ...",
+  "th_reply": "คำแปลภาษาไทยของประโยคตอบลูกค้า",
+  "zh": "ประโยคตอบลูกค้าภาษาจีน (ระบบเวลา 12 ชม.)",
   "pinyin": "พินอิน",
-  "en": "ประโยคตอบลูกค้าภาษาอังกฤษ (สั้น กระชับ)"
+  "en": "ประโยคตอบลูกค้าภาษาอังกฤษ พร้อมคำอ่านเวลาในวงเล็บ"
 }`;
 
     try {
@@ -627,6 +699,7 @@ ${kb}
       cResult = res;
 
       document.getElementById('staffAdviceOut').innerText = res.staff_advice;
+      document.getElementById('cThOut').innerText = res.th_reply || '-';
       document.getElementById('cZhOut').innerText = res.zh;
       document.getElementById('cPinyinOut').innerText = res.pinyin;
       document.getElementById('cEnOut').innerText = res.en;
@@ -669,7 +742,8 @@ ${kb}
 
 หน้าที่: รับข้อความจากผู้ใช้ (ภาษาไทย หรือ ภาษาจีน) แล้วแปลพร้อมวิเคราะห์การผันเสียงวรรณยุกต์ (Tone Sandhi) แบบละเอียดทีละคำ
 1. การแปล:
-   - ถ้าผู้ใช้ส่ง "ภาษาไทย": แปลเป็นจีนตัวย่อ ("zh") ที่สั้น กระชับ สุภาพ ตรงบริบทงานบริการ, ใส่ไทยเดิมใน ("th"), แปลอังกฤษใน ("en")
+   - ใช้ระบบเวลา 12 ชั่วโมง (AM/PM) หากมีการระบุเวลา
+   - ถ้าผู้ใช้ส่ง "ภาษาไทย": แปลเป็นจีนตัวย่อ ("zh") ที่สั้น กระชับ สุภาพ ตรงบริบทงานบริการ, ใส่ไทยเดิมใน ("th"), แปลอังกฤษใน ("en") (หากมีเวลาให้ใส่คำอ่านในวงเล็บ เช่น 3:30 PM (three thirty PM))
    - ถ้าผู้ใช้ส่ง "ภาษาจีน": คงจีนเดิมใน ("zh"), แปลเป็นไทยสละสลวยใน ("th"), แปลอังกฤษใน ("en")
 2. กฎการตรวจจับการผันเสียง (ห้ามขี้เกียจเด็ดขาด!):
    - เขียนพินอินรูปเดิมตามพจนานุกรมใน "pinyin_orig"
@@ -835,7 +909,7 @@ ${kb}
         <div class="p-actions">
           <button class="btn-small" onclick="openModal('${escapeStr(item.zh)}', '${escapeStr(pOrig)}', '${escapeStr(item.en)}')">Fullscreen</button>
           <button class="btn-small" onclick="speak('${escapeStr(item.zh)}', 'zh-CN')">Audio (ZH)</button>
-          <button class="btn-small" onclick="speak('${escapeStr(item.en)}', 'en-US')">Audio (EN)</button>
+          <button class="btn-small" onclick="speak('${escapeStr(cleanSpeechText(item.en))}', 'en-US')">Audio (EN)</button>
           <button class="btn-small" onclick="copy('${escapeStr(item.zh)}', this)">Copy ZH</button>
           <button class="btn-small" style="color:var(--danger); margin-left:auto;" onclick="deletePhrase(${item.id})">Delete</button>
         </div>
@@ -1029,7 +1103,7 @@ ${kb}
   function openModal(zh, pinyin, en) {
     document.getElementById('mZh').innerText = zh;
     document.getElementById('mPinyin').innerText = pinyin;
-    document.getElementById('mEn').innerText = en;
+    document.getElementById('mEn').innerText = cleanSpeechText(en);
     document.getElementById('flashModal').style.display = 'flex';
   }
   function closeModal() { document.getElementById('flashModal').style.display = 'none'; }
